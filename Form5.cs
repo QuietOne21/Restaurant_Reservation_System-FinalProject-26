@@ -156,59 +156,61 @@ namespace Restaurant_Reservation_System_FinalProject_26
                 }
                 connection.Close();
 
-            }
-            tabControl1.SelectedTab = tabPage3;
-            SqlConnection conn = new SqlConnection(queryUserId);
-            conn.Open();
-            SqlCommand commandUserId = new SqlCommand(queryUserId, conn);
-            commandUserId.Parameters.AddWithValue("@UserEmail", txtEmail_Vino.Text); // Assuming there's a textbox for email.
-            int user_id;
-            object userIdResult = commandUserId.ExecuteScalar();
-            if (userIdResult != null)
-            {
-                user_id = Convert.ToInt32(userIdResult); // Save the user_id
-            }
-            else
-            {
-                MessageBox.Show($"No user found with the email {txtEmail_Vino.Text}.");
-                return;
-            }
-            conn.Close();
-
-            try
-            {
-                string sql = "INSERT INTO Reservations (user_id, restaurant_id, reservation_date, reservation_time, number_of_people, reservation_type, special_requests, rsvp_price) VALUES (@RSVP_UserID, RSVP_ResID, @RSVP_date, @RSVP_Time, @No_Of_Guests, @Event_Type, @Special_req, @RSVP_Price)";
-                using (SqlConnection cnn = new SqlConnection(conString))
+                connection.Open();
+                SqlCommand commandUserId = new SqlCommand(queryUserId, connection);
+                commandUserId.Parameters.AddWithValue("@UserEmail", txtEmail_Vino.Text); // Assuming there's a textbox for email.
+                int user_id;
+                object userIdResult = commandUserId.ExecuteScalar();
+                if (userIdResult != null)
                 {
-                    using (SqlCommand cmd = new SqlCommand(sql, cnn))
-                    {
-                        decimal numeric = numericUpDown_Vino.Value;
-                        DateTime reservationDate = DateTime.Parse(cd_vino.Text);
-                        DateTime reservationTime = DateTime.Parse(cbTime_Vino.Text);
+                    user_id = Convert.ToInt32(userIdResult); // Save the user_id
+                }
+                else
+                {
+                    MessageBox.Show($"No user found with the email {txtEmail_Vino.Text}.");
+                    return;
+                }
+                connection.Close();
 
-                        cmd.Parameters.AddWithValue("@RSVP_UserID", user_id);
-                        cmd.Parameters.AddWithValue("@RSVP_ResID", 2);
-                        cmd.Parameters.AddWithValue("@RSVP_date", reservationDate);
-                        cmd.Parameters.AddWithValue("@RSVP_Time", reservationTime);
-                        cmd.Parameters.AddWithValue("@No_Of_Guests", numeric);
-                        cmd.Parameters.AddWithValue("@Event_Type", cbReserveType_Vino.Text);
-                        cmd.Parameters.AddWithValue("@Special_req", cbRequests_Vino.Text);
-                        cmd.Parameters.AddWithValue("@RSVP_Price", reservationPrice);
-                        cnn.Open();
-                        cmd.ExecuteNonQuery();
-                        cnn.Close();
-                        MessageBox.Show("Reservation Booked successfully!");
+                try
+                {
+                    string sql = "INSERT INTO Reservations (user_id, restaurant_id, reservation_date, reservation_time, number_of_people, reservation_type, special_requests, rsvp_price) VALUES (@RSVP_UserID, RSVP_ResID, @RSVP_date, @RSVP_Time, @No_Of_Guests, @Event_Type, @Special_req, @RSVP_Price)";
+                    using (SqlConnection cnn = new SqlConnection(conString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand(sql, cnn))
+                        {
+                            decimal numeric = numericUpDown_Vino.Value;
+                            DateTime reservationDate = DateTime.Parse(cd_vino.Text);
+                            DateTime reservationTime = DateTime.Parse(cbTime_Vino.Text);
+
+                            cmd.Parameters.AddWithValue("@RSVP_UserID", user_id);
+                            cmd.Parameters.AddWithValue("@RSVP_ResID", 2);
+                            cmd.Parameters.AddWithValue("@RSVP_date", reservationDate);
+                            cmd.Parameters.AddWithValue("@RSVP_Time", reservationTime);
+                            cmd.Parameters.AddWithValue("@No_Of_Guests", numeric);
+                            cmd.Parameters.AddWithValue("@Event_Type", cbReserveType_Vino.Text);
+                            cmd.Parameters.AddWithValue("@Special_req", cbRequests_Vino.Text);
+                            cmd.Parameters.AddWithValue("@RSVP_Price", reservationPrice);
+                            cnn.Open();
+                            cmd.ExecuteNonQuery();
+                            cnn.Close();
+                            MessageBox.Show("Reservation Booked successfully!");
+                        }
                     }
                 }
+                catch (SqlException ex)
+                {
+                    MessageBox.Show($"SQL Error: {ex.Message}");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An error occurred: {ex.Message}");
+                }
+
             }
-            catch (SqlException ex)
-            {
-                MessageBox.Show($"SQL Error: {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"An error occurred: {ex.Message}");
-            }
+            tabControl1.SelectedTab = tabPage3;
+
+            
         }
         //2.(Payment of reservation and menu items)
         private void btnPay_Vino_Click(object sender, EventArgs e)
