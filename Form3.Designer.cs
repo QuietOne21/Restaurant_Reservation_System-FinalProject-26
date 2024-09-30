@@ -743,7 +743,7 @@
             // 
             // cBoxTime
             // 
-            this.cBoxTime.FormatString = "t";
+            this.cBoxTime.FormatString = "T";
             this.cBoxTime.FormattingEnabled = true;
             this.cBoxTime.Items.AddRange(new object[] {
             "08:00:00",

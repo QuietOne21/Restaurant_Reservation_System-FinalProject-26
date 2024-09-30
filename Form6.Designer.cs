@@ -285,6 +285,7 @@
             // 
             // cbTime_Pace
             // 
+            this.cbTime_Pace.FormatString = "T";
             this.cbTime_Pace.FormattingEnabled = true;
             this.cbTime_Pace.Items.AddRange(new object[] {
             "Choose time to book:",

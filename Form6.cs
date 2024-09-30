@@ -138,27 +138,81 @@ namespace Restaurant_Reservation_System_FinalProject_26
 
              reservationType = cbReserveType_Pace.SelectedItem.ToString();
                 
-                string query = "SELECT rsvp_price FROM Reservations WHERE reservation_type = @Reservation_type";
+            string query = "SELECT rsvp_price FROM Reservations WHERE reservation_type = @Reservation_type";
+            string queryUserId = "SELECT user_id FROM Use_details WHERE email = @UserEmail";
 
-                using (SqlConnection connection = new SqlConnection(conString))
+
+            using (SqlConnection connection = new SqlConnection(conString))
+            {
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@Reservation_type", reservationType);
+
+                connection.Open();
+                object result = command.ExecuteScalar();
+
+                if (result != null)
                 {
-                    SqlCommand command = new SqlCommand(query, connection);
-                    command.Parameters.AddWithValue("@Reservation_type", reservationType);
+                    reservationPrice = Convert.ToDecimal(result); // Save the price
 
-                    connection.Open();
-                    object result = command.ExecuteScalar();
-
-                    if (result != null)
-                    {
-                        reservationPrice = Convert.ToDecimal(result); // Save the price
-                        
-                    }
-                    else
-                    {
-                        MessageBox.Show($"No price found for {reservationType}.");
-                    }
-                
                 }
+                else
+                {
+                    MessageBox.Show($"No price found for {reservationType}.");
+                }
+                connection.Close();
+            }
+            
+
+            cnn.Open();
+            SqlCommand commandUserId = new SqlCommand(queryUserId, cnn);
+            commandUserId.Parameters.AddWithValue("@UserEmail", txtEmail_Pace.Text); // Assuming there's a textbox for email.
+            int user_id;
+            object userIdResult = commandUserId.ExecuteScalar();
+            if (userIdResult != null)
+            {
+                user_id = Convert.ToInt32(userIdResult); // Save the user_id
+            }
+            else
+            {
+                MessageBox.Show($"No user found with the email {txtEmail_Pace.Text}.");
+                return;
+            }
+            cnn.Close();
+
+            try
+            {
+                string sql = "INSERT INTO Reservations (user_id, restaurant_id, reservation_date, reservation_time, number_of_people, reservation_type, special_requests, rsvp_price) VALUES (@RSVP_UserID, RSVP_ResID, @RSVP_date, @RSVP_Time, @No_Of_Guests, @Event_Type, @Special_req, @RSVP_Price)";
+                using (SqlConnection cnn = new SqlConnection(conString))
+                {
+                    using (SqlCommand cmd = new SqlCommand(sql, cnn))
+                    {
+                        decimal numeric = numericUpDown1_Pace.Value;
+                        DateTime reservationDate = DateTime.Parse(cd_Pace.Text);
+                        DateTime reservationTime = DateTime.Parse(cbTime_Pace.Text);
+
+                        cmd.Parameters.AddWithValue("@RSVP_UserID", user_id);
+                        cmd.Parameters.AddWithValue("@RSVP_ResID", 2);
+                        cmd.Parameters.AddWithValue("@RSVP_date", reservationDate);
+                        cmd.Parameters.AddWithValue("@RSVP_Time", reservationTime);
+                        cmd.Parameters.AddWithValue("@No_Of_Guests", numeric);
+                        cmd.Parameters.AddWithValue("@Event_Type", cbReserveType_Pace.Text);
+                        cmd.Parameters.AddWithValue("@Special_req", cbRequest_Pace.Text);
+                        cmd.Parameters.AddWithValue("@RSVP_Price", reservationPrice);
+                        cnn.Open();
+                        cmd.ExecuteNonQuery();
+                        cnn.Close();
+                        MessageBox.Show("Reservation Booked successfully!");
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show($"SQL Error: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}");
+            }
         }
         //2.(Payment of reservation and menu items)
         private void btnPay_Pace_Click(object sender, EventArgs e)

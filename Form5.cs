@@ -14,6 +14,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 using System.Linq.Expressions;
 using System.Diagnostics;
+using System.Net.NetworkInformation;
 
 namespace Restaurant_Reservation_System_FinalProject_26
 {
@@ -134,6 +135,7 @@ namespace Restaurant_Reservation_System_FinalProject_26
             reservationType = cbReserveType_Vino.SelectedItem.ToString();
 
             string query = "SELECT rsvp_price FROM Reservations WHERE reservation_type = @Reservation_type";
+            string queryUserId = "SELECT user_id FROM Use_details WHERE email = @UserEmail";
 
             using (SqlConnection connection = new SqlConnection(conString))
             {
@@ -152,9 +154,26 @@ namespace Restaurant_Reservation_System_FinalProject_26
                 {
                     MessageBox.Show($"No price found for {reservationType}.");
                 }
+                connection.Close();
 
             }
             tabControl1.SelectedTab = tabPage3;
+
+            cnn.Open();
+            SqlCommand commandUserId = new SqlCommand(queryUserId, cnn);
+            commandUserId.Parameters.AddWithValue("@UserEmail", txtEmail_Vino.Text); // Assuming there's a textbox for email.
+            int user_id;
+            object userIdResult = commandUserId.ExecuteScalar();
+            if (userIdResult != null)
+            {
+                user_id = Convert.ToInt32(userIdResult); // Save the user_id
+            }
+            else
+            {
+                MessageBox.Show($"No user found with the email {txtEmail_Vino.Text}.");
+                return;
+            }
+            cnn.Close();
 
             try
             {
@@ -163,23 +182,22 @@ namespace Restaurant_Reservation_System_FinalProject_26
                 {
                     using (SqlCommand cmd = new SqlCommand(sql, cnn))
                     {
+                        decimal numeric = numericUpDown_Vino.Value;
+                        DateTime reservationDate = DateTime.Parse(cd_vino.Text);
+                        DateTime reservationTime = DateTime.Parse(cbTime_Vino.Text);
 
-                        DateTime reservationDate = DateTime.Parse(datePicker.Text);
-                        DateTime reservationTime = DateTime.Parse(datePicker.Text);
-
-                        cmd.Parameters.AddWithValue("@RSVP_UserID", cBoxRSVP_User_id.Text);
-                        cmd.Parameters.AddWithValue("@RSVP_ResID", cBoxResID.Text);
+                        cmd.Parameters.AddWithValue("@RSVP_UserID", user_id);
+                        cmd.Parameters.AddWithValue("@RSVP_ResID", 2);
                         cmd.Parameters.AddWithValue("@RSVP_date", reservationDate);
                         cmd.Parameters.AddWithValue("@RSVP_Time", reservationTime);
-                        cmd.Parameters.AddWithValue("@No_Of_Guests", int.Parse(txtNoGuestsAdmin.Text));
-                        cmd.Parameters.AddWithValue("@Event_Type", txtEventType.Text);
-                        cmd.Parameters.AddWithValue("@Special_req", txtSpecReq.Text);
-                        cmd.Parameters.AddWithValue("@RSVP_Price", decimal.Parse(txtRSVP_Price.Text));
+                        cmd.Parameters.AddWithValue("@No_Of_Guests", numeric);
+                        cmd.Parameters.AddWithValue("@Event_Type", cbReserveType_Vino.Text);
+                        cmd.Parameters.AddWithValue("@Special_req", cbRequests_Vino.Text);
+                        cmd.Parameters.AddWithValue("@RSVP_Price", reservationPrice);
                         cnn.Open();
                         cmd.ExecuteNonQuery();
                         cnn.Close();
-                        MessageBox.Show("Reservation Added successfully!");
-                        Reload_Reservation();
+                        MessageBox.Show("Reservation Booked successfully!");
                     }
                 }
             }

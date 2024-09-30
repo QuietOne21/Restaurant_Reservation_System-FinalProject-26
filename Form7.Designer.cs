@@ -291,6 +291,7 @@
             // cbTime_Asoka
             // 
             this.cbTime_Asoka.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.cbTime_Asoka.FormatString = "T";
             this.cbTime_Asoka.FormattingEnabled = true;
             this.cbTime_Asoka.Items.AddRange(new object[] {
             "Choose time to book:",

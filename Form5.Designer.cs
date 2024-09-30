@@ -279,6 +279,7 @@
             // 
             // cbTime_Vino
             // 
+            this.cbTime_Vino.FormatString = "T";
             this.cbTime_Vino.FormattingEnabled = true;
             this.cbTime_Vino.Items.AddRange(new object[] {
             "Choose time to book:",
