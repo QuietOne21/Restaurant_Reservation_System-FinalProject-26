@@ -177,6 +177,24 @@ namespace Restaurant_Reservation_System_FinalProject_26
                 }
                 connection.Close();
 
+                DateTime reservationDate, reservationTime;
+
+                // Date Parsing
+                bool isDateValid = DateTime.TryParse(cd_Pace.Text, out reservationDate); // Adjust based on your date input format
+                if (!isDateValid)
+                {
+                    MessageBox.Show("Invalid date format. Please enter a valid date.");
+                    return;
+                }
+
+                // Time Parsing - If you know the exact format, you can specify it using TryParseExact
+                bool isTimeValid = DateTime.TryParse(cbTime_Pace.Text, out reservationTime);
+                if (!isTimeValid)
+                {
+                    MessageBox.Show("Invalid time format. Please enter a valid time.");
+                    return;
+                }
+
                 try
                 {
                     string sql = "INSERT INTO Reservations (user_id, restaurant_id, reservation_date, reservation_time, number_of_people, reservation_type, special_requests, rsvp_price) VALUES (@RSVP_UserID, RSVP_ResID, @RSVP_date, @RSVP_Time, @No_Of_Guests, @Event_Type, @Special_req, @RSVP_Price)";
@@ -185,8 +203,6 @@ namespace Restaurant_Reservation_System_FinalProject_26
                         using (SqlCommand cmd = new SqlCommand(sql, cnn))
                         {
                             decimal numeric = numericUpDown1_Pace.Value;
-                            DateTime reservationDate = DateTime.Parse(cd_Pace.Text);
-                            DateTime reservationTime = DateTime.Parse(cbTime_Pace.Text);
 
                             cmd.Parameters.AddWithValue("@RSVP_UserID", user_id);
                             cmd.Parameters.AddWithValue("@RSVP_ResID", 4);

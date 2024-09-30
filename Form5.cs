@@ -135,7 +135,7 @@ namespace Restaurant_Reservation_System_FinalProject_26
             reservationType = cbReserveType_Vino.SelectedItem.ToString();
 
             string query = "SELECT rsvp_price FROM Reservations WHERE reservation_type = @Reservation_type";
-            string queryUserId = "SELECT user_id FROM Use_details WHERE email = @UserEmail";
+            string queryUserId = "SELECT user_id FROM User_account WHERE email = @UserEmail";
 
             using (SqlConnection connection = new SqlConnection(conString))
             {
@@ -172,6 +172,25 @@ namespace Restaurant_Reservation_System_FinalProject_26
                 }
                 connection.Close();
 
+                DateTime reservationDate, reservationTime;
+
+                // Date Parsing
+                bool isDateValid = DateTime.TryParse(cd_vino.Text, out reservationDate); // Adjust based on your date input format
+                if (!isDateValid)
+                {
+                    MessageBox.Show("Invalid date format. Please enter a valid date.");
+                    return;
+                }
+
+                // Time Parsing - If you know the exact format, you can specify it using TryParseExact
+                bool isTimeValid = DateTime.TryParse(cbTime_Vino.Text, out reservationTime);
+                if (!isTimeValid)
+                {
+                    MessageBox.Show("Invalid time format. Please enter a valid time.");
+                    return;
+                }
+
+
                 try
                 {
                     string sql = "INSERT INTO Reservations (user_id, restaurant_id, reservation_date, reservation_time, number_of_people, reservation_type, special_requests, rsvp_price) VALUES (@RSVP_UserID, RSVP_ResID, @RSVP_date, @RSVP_Time, @No_Of_Guests, @Event_Type, @Special_req, @RSVP_Price)";
@@ -180,8 +199,6 @@ namespace Restaurant_Reservation_System_FinalProject_26
                         using (SqlCommand cmd = new SqlCommand(sql, cnn))
                         {
                             decimal numeric = numericUpDown_Vino.Value;
-                            DateTime reservationDate = DateTime.Parse(cd_vino.Text);
-                            DateTime reservationTime = DateTime.Parse(cbTime_Vino.Text);
 
                             cmd.Parameters.AddWithValue("@RSVP_UserID", user_id);
                             cmd.Parameters.AddWithValue("@RSVP_ResID", 2);
