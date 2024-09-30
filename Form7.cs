@@ -150,6 +150,7 @@ namespace Restaurant_Reservation_System_FinalProject_26
             }
             tabControl1.SelectedTab = tabPage3;
 
+            SqlConnection conn = new SqlConnection(queryUserId);
             cnn.Open();
             SqlCommand commandUserId = new SqlCommand(queryUserId, cnn);
             commandUserId.Parameters.AddWithValue("@UserEmail", txtEmail_Asoka.Text); // Assuming there's a textbox for email.
@@ -178,7 +179,7 @@ namespace Restaurant_Reservation_System_FinalProject_26
                         DateTime reservationTime = DateTime.Parse(cbTime_Asoka.Text);
 
                         cmd.Parameters.AddWithValue("@RSVP_UserID", user_id);
-                        cmd.Parameters.AddWithValue("@RSVP_ResID", 2);
+                        cmd.Parameters.AddWithValue("@RSVP_ResID", 5);
                         cmd.Parameters.AddWithValue("@RSVP_date", reservationDate);
                         cmd.Parameters.AddWithValue("@RSVP_Time", reservationTime);
                         cmd.Parameters.AddWithValue("@No_Of_Guests", numeric);

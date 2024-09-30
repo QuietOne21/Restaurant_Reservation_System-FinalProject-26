@@ -158,9 +158,9 @@ namespace Restaurant_Reservation_System_FinalProject_26
 
             }
             tabControl1.SelectedTab = tabPage3;
-
-            cnn.Open();
-            SqlCommand commandUserId = new SqlCommand(queryUserId, cnn);
+            SqlConnection conn = new SqlConnection(queryUserId);
+            conn.Open();
+            SqlCommand commandUserId = new SqlCommand(queryUserId, conn);
             commandUserId.Parameters.AddWithValue("@UserEmail", txtEmail_Vino.Text); // Assuming there's a textbox for email.
             int user_id;
             object userIdResult = commandUserId.ExecuteScalar();
@@ -173,7 +173,7 @@ namespace Restaurant_Reservation_System_FinalProject_26
                 MessageBox.Show($"No user found with the email {txtEmail_Vino.Text}.");
                 return;
             }
-            cnn.Close();
+            conn.Close();
 
             try
             {
