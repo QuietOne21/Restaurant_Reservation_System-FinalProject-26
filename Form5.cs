@@ -172,46 +172,35 @@ namespace Restaurant_Reservation_System_FinalProject_26
                 }
                 connection.Close();
 
-                DateTime reservationDate, reservationTime;
-
-                // Date Parsing
-                bool isDateValid = DateTime.TryParse(cd_vino.Text, out reservationDate); // Adjust based on your date input format
-                if (!isDateValid)
-                {
-                    MessageBox.Show("Invalid date format. Please enter a valid date.");
-                    return;
-                }
-
-                // Time Parsing - If you know the exact format, you can specify it using TryParseExact
-                bool isTimeValid = DateTime.TryParse(cbTime_Vino.Text, out reservationTime);
-                if (!isTimeValid)
-                {
-                    MessageBox.Show("Invalid time format. Please enter a valid time.");
-                    return;
-                }
-
-
                 try
                 {
-                    string sql = "INSERT INTO Reservations (user_id, restaurant_id, reservation_date, reservation_time, number_of_people, reservation_type, special_requests, rsvp_price) VALUES (@RSVP_UserID, RSVP_ResID, @RSVP_date, @RSVP_Time, @No_Of_Guests, @Event_Type, @Special_req, @RSVP_Price)";
-                    using (SqlConnection cnn = new SqlConnection(conString))
-                    {
-                        using (SqlCommand cmd = new SqlCommand(sql, cnn))
-                        {
-                            decimal numeric = numericUpDown_Vino.Value;
+                    // Get the date from DatePicker (already a DateTime object)
+                    DateTime reservationDate = cd_vino.SelectionStart; 
 
-                            cmd.Parameters.AddWithValue("@RSVP_UserID", user_id);
-                            cmd.Parameters.AddWithValue("@RSVP_ResID", 2);
-                            cmd.Parameters.AddWithValue("@RSVP_date", reservationDate);
-                            cmd.Parameters.AddWithValue("@RSVP_Time", reservationTime);
-                            cmd.Parameters.AddWithValue("@No_Of_Guests", numeric);
-                            cmd.Parameters.AddWithValue("@Event_Type", cbReserveType_Vino.Text);
-                            cmd.Parameters.AddWithValue("@Special_req", cbRequests_Vino.Text);
-                            cmd.Parameters.AddWithValue("@RSVP_Price", reservationPrice);
-                            cnn.Open();
-                            cmd.ExecuteNonQuery();
-                            cnn.Close();
-                            MessageBox.Show("Reservation Booked successfully!");
+                    TimeSpan reservationTimeSpan;
+                    if (TimeSpan.TryParse(cbTime_Vino.Text, out reservationTimeSpan))
+                    {
+                        DateTime reservationDateTime = reservationDate.Date + reservationTimeSpan;
+                        string sql = "INSERT INTO Reservations (user_id, restaurant_id, reservation_date, reservation_time, number_of_people, reservation_type, special_requests, rsvp_price) VALUES (@RSVP_UserID, @RSVP_ResID, @RSVP_date, @RSVP_Time, @No_Of_Guests, @Event_Type, @Special_req, @RSVP_Price)";
+                        using (SqlConnection cnn = new SqlConnection(conString))
+                        {
+                            using (SqlCommand cmd = new SqlCommand(sql, cnn))
+                            {
+                                decimal numeric = numericUpDown_Vino.Value;
+
+                                cmd.Parameters.AddWithValue("@RSVP_UserID", user_id);
+                                cmd.Parameters.AddWithValue("@RSVP_ResID", 2);
+                                cmd.Parameters.AddWithValue("@RSVP_date", reservationDate);
+                                cmd.Parameters.AddWithValue("@RSVP_Time", reservationDateTime);
+                                cmd.Parameters.AddWithValue("@No_Of_Guests", numeric);
+                                cmd.Parameters.AddWithValue("@Event_Type", cbReserveType_Vino.Text);
+                                cmd.Parameters.AddWithValue("@Special_req", cbRequests_Vino.Text);
+                                cmd.Parameters.AddWithValue("@RSVP_Price", reservationPrice);
+                                cnn.Open();
+                                cmd.ExecuteNonQuery();
+                                cnn.Close();
+                                MessageBox.Show("Reservation Booked successfully!");
+                            }
                         }
                     }
                 }
