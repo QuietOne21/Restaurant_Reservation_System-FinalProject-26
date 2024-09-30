@@ -916,14 +916,15 @@
             // 
             // cbRSVPfilter
             // 
-            this.cbRSVPfilter.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.reservationsBindingSource, "reservation_id", true));
-            this.cbRSVPfilter.DataSource = this.reservationsBindingSource;
+            this.cbRSVPfilter.DataSource = this.reservationsBindingSource1;
             this.cbRSVPfilter.DisplayMember = "user_id";
             this.cbRSVPfilter.FormattingEnabled = true;
             this.cbRSVPfilter.Location = new System.Drawing.Point(694, 424);
             this.cbRSVPfilter.Name = "cbRSVPfilter";
             this.cbRSVPfilter.Size = new System.Drawing.Size(164, 22);
             this.cbRSVPfilter.TabIndex = 22;
+            this.cbRSVPfilter.Text = "Choose a User ID to filter:";
+            this.cbRSVPfilter.ValueMember = "user_id";
             this.cbRSVPfilter.SelectedIndexChanged += new System.EventHandler(this.cbRSVPfilter_SelectedIndexChanged);
             // 
             // reservationsBindingSource
