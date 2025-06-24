@@ -146,7 +146,7 @@
             this.btnSignUp.Location = new System.Drawing.Point(485, 386);
             this.btnSignUp.Name = "btnSignUp";
             this.btnSignUp.Size = new System.Drawing.Size(85, 50);
-            this.btnSignUp.TabIndex = 15;
+            this.btnSignUp.TabIndex = 14;
             this.btnSignUp.Text = "Sign Up";
             this.btnSignUp.UseVisualStyleBackColor = false;
             this.btnSignUp.Click += new System.EventHandler(this.btnSignUp_Click);
@@ -156,7 +156,7 @@
             this.txtSignName.Location = new System.Drawing.Point(539, 165);
             this.txtSignName.Name = "txtSignName";
             this.txtSignName.Size = new System.Drawing.Size(173, 22);
-            this.txtSignName.TabIndex = 14;
+            this.txtSignName.TabIndex = 7;
             // 
             // txtSignConPass
             // 
@@ -332,7 +332,7 @@
             this.btnUserLogin.Location = new System.Drawing.Point(530, 392);
             this.btnUserLogin.Name = "btnUserLogin";
             this.btnUserLogin.Size = new System.Drawing.Size(85, 50);
-            this.btnUserLogin.TabIndex = 16;
+            this.btnUserLogin.TabIndex = 19;
             this.btnUserLogin.Text = "Login";
             this.btnUserLogin.UseVisualStyleBackColor = false;
             this.btnUserLogin.Click += new System.EventHandler(this.btnUserLogin_Click);
@@ -408,7 +408,7 @@
             this.btnAdminLogin.Location = new System.Drawing.Point(519, 379);
             this.btnAdminLogin.Name = "btnAdminLogin";
             this.btnAdminLogin.Size = new System.Drawing.Size(85, 50);
-            this.btnAdminLogin.TabIndex = 17;
+            this.btnAdminLogin.TabIndex = 20;
             this.btnAdminLogin.Text = "Login";
             this.btnAdminLogin.UseVisualStyleBackColor = false;
             this.btnAdminLogin.Click += new System.EventHandler(this.btnAdminLogin_Click);

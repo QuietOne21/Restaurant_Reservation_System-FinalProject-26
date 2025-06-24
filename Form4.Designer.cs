@@ -51,8 +51,6 @@
             this.lblHomeUserName = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.pbRes1 = new System.Windows.Forms.PictureBox();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.lblHistory = new System.Windows.Forms.ListBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
@@ -63,13 +61,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbRes3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbRes2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbRes1)).BeginInit();
-            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Font = new System.Drawing.Font("Microsoft PhagsPa", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
@@ -324,26 +320,6 @@
             this.pbRes1.TabStop = false;
             this.pbRes1.Click += new System.EventHandler(this.pbRes1_Click);
             // 
-            // tabPage2
-            // 
-            this.tabPage2.BackColor = System.Drawing.Color.Silver;
-            this.tabPage2.Controls.Add(this.lblHistory);
-            this.tabPage2.Location = new System.Drawing.Point(4, 23);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Size = new System.Drawing.Size(1218, 471);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "History";
-            // 
-            // lblHistory
-            // 
-            this.lblHistory.FormattingEnabled = true;
-            this.lblHistory.ItemHeight = 14;
-            this.lblHistory.Location = new System.Drawing.Point(3, 3);
-            this.lblHistory.Name = "lblHistory";
-            this.lblHistory.Size = new System.Drawing.Size(780, 424);
-            this.lblHistory.TabIndex = 0;
-            this.lblHistory.SelectedIndexChanged += new System.EventHandler(this.lblHistory_SelectedIndexChanged);
-            // 
             // Form4
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -366,7 +342,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbRes3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbRes2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbRes1)).EndInit();
-            this.tabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -395,7 +370,5 @@
         private System.Windows.Forms.PictureBox pictureBox5;
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.Button btnHomeLogOff;
-        private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.ListBox lblHistory;
     }
 }

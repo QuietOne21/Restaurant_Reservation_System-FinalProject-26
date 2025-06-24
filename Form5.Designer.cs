@@ -145,13 +145,14 @@
             this.txtcrdholder_Vino = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.lbVinoHistory = new System.Windows.Forms.ListBox();
+            this.BtnSeeHst = new System.Windows.Forms.Button();
             this.label18 = new System.Windows.Forms.Label();
             this.rtxtReview_Vino = new System.Windows.Forms.RichTextBox();
             this.btnReview_Vino = new System.Windows.Forms.Button();
             this.lbReview_Vino = new System.Windows.Forms.ListBox();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
-            this.lbVinoHistory = new System.Windows.Forms.ListBox();
-            this.BtnSeeHst = new System.Windows.Forms.Button();
+            this.btnAdminLogOff = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Vino)).BeginInit();
@@ -1606,6 +1607,7 @@
             // 
             this.tabPage5.BackColor = System.Drawing.Color.Silver;
             this.tabPage5.BackgroundImage = global::Restaurant_Reservation_System_FinalProject_26.Properties.Resources._330_768x5911;
+            this.tabPage5.Controls.Add(this.btnAdminLogOff);
             this.tabPage5.Controls.Add(this.lbVinoHistory);
             this.tabPage5.Controls.Add(this.BtnSeeHst);
             this.tabPage5.Controls.Add(this.label18);
@@ -1618,6 +1620,25 @@
             this.tabPage5.Size = new System.Drawing.Size(1212, 480);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "Reviews";
+            // 
+            // lbVinoHistory
+            // 
+            this.lbVinoHistory.FormattingEnabled = true;
+            this.lbVinoHistory.ItemHeight = 14;
+            this.lbVinoHistory.Location = new System.Drawing.Point(802, 15);
+            this.lbVinoHistory.Name = "lbVinoHistory";
+            this.lbVinoHistory.Size = new System.Drawing.Size(375, 270);
+            this.lbVinoHistory.TabIndex = 14;
+            // 
+            // BtnSeeHst
+            // 
+            this.BtnSeeHst.Location = new System.Drawing.Point(1058, 310);
+            this.BtnSeeHst.Name = "BtnSeeHst";
+            this.BtnSeeHst.Size = new System.Drawing.Size(75, 23);
+            this.BtnSeeHst.TabIndex = 13;
+            this.BtnSeeHst.Text = "See History";
+            this.BtnSeeHst.UseVisualStyleBackColor = true;
+            this.BtnSeeHst.Click += new System.EventHandler(this.BtnSeeHst_Click);
             // 
             // label18
             // 
@@ -1671,24 +1692,19 @@
             this.pictureBox5.TabIndex = 0;
             this.pictureBox5.TabStop = false;
             // 
-            // lbVinoHistory
+            // btnAdminLogOff
             // 
-            this.lbVinoHistory.FormattingEnabled = true;
-            this.lbVinoHistory.ItemHeight = 14;
-            this.lbVinoHistory.Location = new System.Drawing.Point(802, 15);
-            this.lbVinoHistory.Name = "lbVinoHistory";
-            this.lbVinoHistory.Size = new System.Drawing.Size(375, 270);
-            this.lbVinoHistory.TabIndex = 14;
-            // 
-            // BtnSeeHst
-            // 
-            this.BtnSeeHst.Location = new System.Drawing.Point(1058, 310);
-            this.BtnSeeHst.Name = "BtnSeeHst";
-            this.BtnSeeHst.Size = new System.Drawing.Size(75, 23);
-            this.BtnSeeHst.TabIndex = 13;
-            this.BtnSeeHst.Text = "See History";
-            this.BtnSeeHst.UseVisualStyleBackColor = true;
-            this.BtnSeeHst.Click += new System.EventHandler(this.BtnSeeHst_Click);
+            this.btnAdminLogOff.BackColor = System.Drawing.Color.Crimson;
+            this.btnAdminLogOff.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnAdminLogOff.Font = new System.Drawing.Font("Microsoft PhagsPa", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAdminLogOff.ForeColor = System.Drawing.SystemColors.Info;
+            this.btnAdminLogOff.Location = new System.Drawing.Point(1074, 413);
+            this.btnAdminLogOff.Name = "btnAdminLogOff";
+            this.btnAdminLogOff.Size = new System.Drawing.Size(103, 46);
+            this.btnAdminLogOff.TabIndex = 15;
+            this.btnAdminLogOff.Text = "Log Off";
+            this.btnAdminLogOff.UseVisualStyleBackColor = false;
+            this.btnAdminLogOff.Click += new System.EventHandler(this.btnAdminLogOff_Click);
             // 
             // Form5
             // 
@@ -1872,5 +1888,6 @@
         private System.Windows.Forms.ComboBox cbRequests_Vino;
         private System.Windows.Forms.ListBox lbVinoHistory;
         private System.Windows.Forms.Button BtnSeeHst;
+        private System.Windows.Forms.Button btnAdminLogOff;
     }
 }
