@@ -126,7 +126,7 @@ namespace Restaurant_Reservation_System_FinalProject_26
             reservationType = cbReserveType_Asoka.SelectedItem.ToString();
 
             string query = "SELECT rsvp_price FROM Reservations WHERE reservation_type = @Reservation_type";
-            string queryUserId = "SELECT user_id FROM Use_details WHERE email = @UserEmail";
+            string queryUserId = "SELECT user_id FROM User_account WHERE email = @UserEmail";
 
             using (SqlConnection connection = new SqlConnection(conString))
             {
@@ -1711,6 +1711,13 @@ namespace Restaurant_Reservation_System_FinalProject_26
                 // Hide the ListBox if it is already visible
                 lbAsokaHistory.Visible = false;
             }
+        }
+
+        private void btnAdminLogOff_Click(object sender, EventArgs e)
+        {
+            Form2 frm2 = new Form2();
+            frm2.Show();
+            this.Close();
         }
     }
 }

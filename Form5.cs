@@ -1772,5 +1772,12 @@ namespace Restaurant_Reservation_System_FinalProject_26
                 }
             }
         }
+
+        private void btnAdminLogOff_Click(object sender, EventArgs e)
+        {
+            Form2 frm2 = new Form2();
+            frm2.Show();
+            this.Close();
+        }
     }
 }

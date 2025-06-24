@@ -23,6 +23,9 @@ namespace Restaurant_Reservation_System_FinalProject_26
         public Form3()
         {
             InitializeComponent();
+            rdVino.CheckedChanged += RadioButton_CheckedChanged;
+            rdPace.CheckedChanged += RadioButton_CheckedChanged;
+            rdAsoka.CheckedChanged += RadioButton_CheckedChanged;
         }
         private void btnAdminLogOff_Click(object sender, EventArgs e)
         {
@@ -52,7 +55,7 @@ namespace Restaurant_Reservation_System_FinalProject_26
             this.user_accountTableAdapter.Fill(this.restaurant_serviceDataSet3.User_account);
             // TODO: This line of code loads data into the 'restaurant_serviceDataSet2.MenuItems' table. You can move, or remove it, as needed.
             this.menuItemsTableAdapter.Fill(this.restaurant_serviceDataSet2.MenuItems);
-
+            LoadReservations();
             cnn = new SqlConnection(conString);
             cbDeleteItem.Visible = true;
             cbDeleteReserve.Visible = true;
@@ -193,6 +196,8 @@ namespace Restaurant_Reservation_System_FinalProject_26
 
                         Reload();
                         txtItemID_Admin.Text = " ";
+                        txtUserID_Admin.Text = txtName_Admin.Text = txtSurname_Admin.Text = txtEmail_Admin.Text = txtPhoneNo_Admin.Text = txtPassword_Admin.Text = "";
+                        txtUserID_Admin.Focus();
                     }
                 }
                 else
@@ -229,6 +234,8 @@ namespace Restaurant_Reservation_System_FinalProject_26
                         cnn.Close();
                         MessageBox.Show("User Details Added successfully!");
                         Reload();
+                        txtUserID_Admin.Text = txtName_Admin.Text = txtSurname_Admin.Text = txtEmail_Admin.Text = txtPhoneNo_Admin.Text = txtPassword_Admin.Text = "";
+                        txtName_Admin.Focus();
                     }
                 }
             }
@@ -272,6 +279,9 @@ namespace Restaurant_Reservation_System_FinalProject_26
                                 // You can add code here to handle success
                                 MessageBox.Show("User Details updated successfully!");
                                 Reload();
+
+                                txtUserID_Admin.Text = txtName_Admin.Text = txtSurname_Admin.Text = txtEmail_Admin.Text = txtPhoneNo_Admin.Text = txtPassword_Admin.Text = "";
+                                txtUserID_Admin.Focus();
                             }
                             else
                             {
@@ -368,6 +378,9 @@ namespace Restaurant_Reservation_System_FinalProject_26
                         cnn.Close();
                         MessageBox.Show("Menu Item Added successfully!");
                         Reload_Items();
+
+                        txtItemID_Admin.Text = txtItemName_Admin.Text = txtResDescr_Admin.Text = txtItemPrice_Admin.Text = "";
+                        txtItemName_Admin.Focus();
                     }
                 }
             }
@@ -409,6 +422,9 @@ namespace Restaurant_Reservation_System_FinalProject_26
                                 // You can add code here to handle success
                                 MessageBox.Show("Menu Items updated successfully!");
                                 Reload_Items();
+
+                                txtItemID_Admin.Text = txtItemName_Admin.Text = txtResDescr_Admin.Text = txtItemPrice_Admin.Text = "";
+                                txtItemID_Admin.Focus();
                             }
                             else
                             {
@@ -461,7 +477,8 @@ namespace Restaurant_Reservation_System_FinalProject_26
                         MessageBox.Show("Menu Items deleted successfully!");
 
                         Reload_Items();
-                        txtItemID_Admin.Text = " ";
+                        txtItemID_Admin.Text = txtItemName_Admin.Text = txtResDescr_Admin.Text = txtItemPrice_Admin.Text = "";
+                        txtItemID_Admin.Focus();
                     }
                 }
                 else
@@ -553,6 +570,9 @@ namespace Restaurant_Reservation_System_FinalProject_26
                         cnn.Close();
                         MessageBox.Show("Reservation Added successfully!");
                         Reload_Reservation();
+
+                        txtRsvpID.Text = txtNoGuestsAdmin.Text = txtEventType.Text = txtSpecReq.Text = txtRSVP_Price.Text = "";
+                        cBoxRSVP_User_id.Focus();
                     }
                 }
             }
@@ -601,6 +621,9 @@ namespace Restaurant_Reservation_System_FinalProject_26
                                 // You can add code here to handle success
                                 MessageBox.Show("Reservation updated successfully!");
                                 Reload_Reservation();
+
+                                txtRsvpID.Text = txtNoGuestsAdmin.Text = txtEventType.Text = txtSpecReq.Text = txtRSVP_Price.Text = "";
+                                txtRsvpID.Focus();
                             }
                             else
                             {
@@ -654,6 +677,9 @@ namespace Restaurant_Reservation_System_FinalProject_26
 
                         Reload_Reservation();
                         txtRsvpID.Text = " ";
+
+                        txtRsvpID.Text = txtNoGuestsAdmin.Text = txtEventType.Text = txtSpecReq.Text = txtRSVP_Price.Text = "";
+                        txtRsvpID.Focus();
                     }
                 }
                 else
@@ -721,6 +747,274 @@ namespace Restaurant_Reservation_System_FinalProject_26
         {
             cbDeleteReserve.Visible = true;
 
+        }
+
+        private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+       
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LoadReservations()
+        {
+            // Updated SQL query to get all relevant reservation details
+            string query = @"
+        SELECT 
+            u.user_id, -- Keep this for reference but do not display it
+            u.name, 
+            u.surname, 
+            r.reservation_date, 
+            u.email, 
+            r.number_of_people, 
+            r.reservation_type, 
+            r.special_requests, 
+            r.rsvp_price, 
+            res.name AS restaurant_name 
+            FROM 
+                Reservations r
+            JOIN 
+                User_account u ON r.user_id = u.user_id
+            JOIN 
+                Restaurants res ON r.restaurant_id = res.restaurant_id";
+
+            using (SqlConnection cnn = new SqlConnection(conString))
+            {
+                cnn.Open();
+                using (SqlCommand cmd = new SqlCommand(query, cnn))
+                {
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        listBox1.Items.Clear(); 
+                        while (reader.Read())
+                        {
+                            string item = $"Customer ID: {reader["user_id"]}\n";
+                            listBox1.Items.Add(item);
+                            string item1 = $"Name: {reader["name"]} {reader["surname"]}\n";
+                            listBox1.Items.Add(item1);
+                            string item2 = $"Reservation Date: {reader["reservation_date"]:yyyy-MM-dd}\n";
+                            listBox1.Items.Add(item2);
+                            string item3 = $"Number of Guests: {reader["number_of_people"]}\n";
+                            listBox1.Items.Add(item3);
+                            string item4 = $"Restaurant: {reader["restaurant_name"]}\n"; 
+                            listBox1.Items.Add(item4);
+                            string item5 = $"Reservation Type: {reader["reservation_type"]}\n";
+                            listBox1.Items.Add(item5);
+                            string item6 = $"Special Requests: {reader["special_requests"]}\n";
+                            listBox1.Items.Add(item6);
+                            string item7 = $"Reservation Price: {(decimal)reader["rsvp_price"] * (int)reader["number_of_people"]:C}\n";
+                            listBox1.Items.Add(item7);
+                            string item8 = $"------------------------------------\n";
+                            listBox1.Items.Add(item8);
+                            string item9 = " \n";
+                            listBox1.Items.Add(item9);
+
+
+
+                        }
+                    }
+                }
+            }
+        }
+
+        private void LoadReservationsForRestaurant(string restaurantName)
+        {
+            // SQL query to get reservations for the selected restaurant
+            string query = @"
+                SELECT 
+                    u.user_id, 
+                    u.name, 
+                    u.surname, 
+                    r.reservation_date, 
+                    u.email, 
+                    r.number_of_people, 
+                    r.reservation_type, 
+                    r.special_requests, 
+                    r.rsvp_price, 
+                    res.name AS restaurant_name 
+                FROM 
+                    Reservations r
+                JOIN 
+                    User_account u ON r.user_id = u.user_id
+                JOIN 
+                    Restaurants res ON r.restaurant_id = res.restaurant_id
+                WHERE 
+                    res.name = @RestaurantName"; // Parameterized query
+
+            using (SqlConnection cnn = new SqlConnection(conString))
+            {
+                cnn.Open();
+                using (SqlCommand cmd = new SqlCommand(query, cnn))
+                {
+                    // Add parameter to avoid SQL injection
+                    cmd.Parameters.AddWithValue("@RestaurantName", restaurantName);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        listBox1.Items.Clear();
+                        while (reader.Read())
+                        {
+                            string item = $"Customer ID: {reader["user_id"]}\n";
+                            listBox1.Items.Add(item);
+                            string item1 = $"Name: {reader["name"]} {reader["surname"]}\n";
+                            listBox1.Items.Add(item1);
+                            string item2 = $"Reservation Date: {((DateTime)reader["reservation_date"]).ToString("yyyy-MM-dd")}\n";
+                            listBox1.Items.Add(item2);
+                            string item3 = $"Number of Guests: {reader["number_of_people"]}\n";
+                            listBox1.Items.Add(item3);
+                            string item4 = $"Restaurant: {reader["restaurant_name"]}\n";
+                            listBox1.Items.Add(item4);
+                            string item5 = $"Reservation Type: {reader["reservation_type"]}\n";
+                            listBox1.Items.Add(item5);
+                            string item6 = $"Special Requests: {reader["special_requests"]}\n";
+                            listBox1.Items.Add(item6);
+                            string item7 = $"Reservation Price: {(decimal)reader["rsvp_price"] * (int)reader["number_of_people"]:C}\n";
+                            listBox1.Items.Add(item7);
+                            string item8 = $"------------------------------------\n";
+                            listBox1.Items.Add(item8);
+                            string item9 = " \n";
+                            listBox1.Items.Add(item9);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void brnRefresh_Click(object sender, EventArgs e)
+        {
+            listBox1.Items.Clear();//for incase thers data 
+            UncheckRadioButtons();
+            UnselectDateTimePicker();
+            // Reload all reservations
+            LoadReservations();
+        }
+        private void UncheckRadioButtons()
+        {
+            // Uncheck all RadioButtons
+            rdVino.Checked = false;
+            rdPace.Checked = false;
+            rdAsoka.Checked = false;
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+            UncheckRadioButtons();
+                // Get the selected date
+                DateTime selectedDate = dateTimePicker1.Value.Date;
+
+                // Load reservations for the selected date
+                LoadReservationsByDate(selectedDate);
+          
+
+        }
+        private void UnselectDateTimePicker()
+        {
+            // Set the DateTimePicker to its minimum value (or use a custom default)
+            dateTimePicker1.Value = DateTimePicker.MinimumDateTime; // This indicates no specific date
+        }
+
+        private void LoadReservationsByDate(DateTime date)
+        {
+            // SQL query to get reservations for the selected date
+            string query = @"
+            SELECT 
+                u.user_id, 
+                u.name, 
+                u.surname, 
+                r.reservation_date, 
+                u.email, 
+                r.number_of_people, 
+                r.reservation_type, 
+                r.special_requests, 
+                r.rsvp_price, 
+                res.name AS restaurant_name 
+            FROM 
+                Reservations r
+            JOIN 
+                User_account u ON r.user_id = u.user_id
+            JOIN 
+                Restaurants res ON r.restaurant_id = res.restaurant_id
+            WHERE 
+                CAST(r.reservation_date AS DATE) = @SelectedDate"; // Parameterized query
+
+            using (SqlConnection cnn = new SqlConnection(conString))
+            {
+                cnn.Open();
+                using (SqlCommand cmd = new SqlCommand(query, cnn))
+                {
+                    
+                    cmd.Parameters.AddWithValue("@SelectedDate", date);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        listBox1.Items.Clear();
+                        while (reader.Read())
+                        {
+                            string item = $"Customer ID: {reader["user_id"]}\n";
+                            listBox1.Items.Add(item);
+                            string item1 = $"Name: {reader["name"]} {reader["surname"]}\n";
+                            listBox1.Items.Add(item1);
+                            string item2 = $"Reservation Date: {((DateTime)reader["reservation_date"]).ToString("yyyy-MM-dd")}\n";
+                            listBox1.Items.Add(item2);
+                            string item3 = $"Number of Guests: {reader["number_of_people"]}\n";
+                            listBox1.Items.Add(item3);
+                            string item4 = $"Restaurant: {reader["restaurant_name"]}\n";
+                            listBox1.Items.Add(item4);
+                            string item5 = $"Reservation Type: {reader["reservation_type"]}\n";
+                            listBox1.Items.Add(item5);
+                            string item6 = $"Special Requests: {reader["special_requests"]}\n";
+                            listBox1.Items.Add(item6);
+                            string item7 = $"Reservation Price: {(decimal)reader["rsvp_price"] * (int)reader["number_of_people"]:C}\n";
+                            listBox1.Items.Add(item7);
+                            string item8 = $"------------------------------------\n";
+                            listBox1.Items.Add(item8);
+                            string item9 = " \n";
+                            listBox1.Items.Add(item9);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void rdVino_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void rdPace_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void rdAsoka_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+        private void RadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButton selectedRadioButton = sender as RadioButton;
+            if (selectedRadioButton != null && selectedRadioButton.Checked)
+            {
+                UnselectDateTimePicker();
+                string selectedRestaurant = selectedRadioButton.Text; // Gets the restaurant name from the RadioButton's text
+                LoadReservationsForRestaurant(selectedRestaurant);
+            }
+        }
+
+        private void label20_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnLogOff_Click(object sender, EventArgs e)
+        {
+            Form2 frm2 = new Form2();
+            frm2.Show();
+            this.Close();
         }
     }
 }

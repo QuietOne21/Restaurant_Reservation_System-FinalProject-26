@@ -146,13 +146,14 @@
             this.txtcrdholder_Asoka = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.lbAsokaHistory = new System.Windows.Forms.ListBox();
+            this.BtnSeeHst = new System.Windows.Forms.Button();
             this.label18 = new System.Windows.Forms.Label();
             this.rtxtReview_Asoka = new System.Windows.Forms.RichTextBox();
             this.btnReview_Asoka = new System.Windows.Forms.Button();
             this.lbReview_Asoka = new System.Windows.Forms.ListBox();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
-            this.lbAsokaHistory = new System.Windows.Forms.ListBox();
-            this.BtnSeeHst = new System.Windows.Forms.Button();
+            this.btnAdminLogOff = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1_Asoka)).BeginInit();
@@ -1617,6 +1618,7 @@
             this.tabPage5.BackColor = System.Drawing.Color.Silver;
             this.tabPage5.BackgroundImage = global::Restaurant_Reservation_System_FinalProject_26.Properties.Resources.Asoka2;
             this.tabPage5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.tabPage5.Controls.Add(this.btnAdminLogOff);
             this.tabPage5.Controls.Add(this.lbAsokaHistory);
             this.tabPage5.Controls.Add(this.BtnSeeHst);
             this.tabPage5.Controls.Add(this.label18);
@@ -1629,6 +1631,26 @@
             this.tabPage5.Size = new System.Drawing.Size(1224, 480);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "Reviews";
+            // 
+            // lbAsokaHistory
+            // 
+            this.lbAsokaHistory.FormattingEnabled = true;
+            this.lbAsokaHistory.ItemHeight = 14;
+            this.lbAsokaHistory.Location = new System.Drawing.Point(819, 14);
+            this.lbAsokaHistory.Name = "lbAsokaHistory";
+            this.lbAsokaHistory.Size = new System.Drawing.Size(375, 270);
+            this.lbAsokaHistory.TabIndex = 16;
+            // 
+            // BtnSeeHst
+            // 
+            this.BtnSeeHst.BackColor = System.Drawing.Color.Gray;
+            this.BtnSeeHst.Location = new System.Drawing.Point(1075, 309);
+            this.BtnSeeHst.Name = "BtnSeeHst";
+            this.BtnSeeHst.Size = new System.Drawing.Size(75, 23);
+            this.BtnSeeHst.TabIndex = 15;
+            this.BtnSeeHst.Text = "See History";
+            this.BtnSeeHst.UseVisualStyleBackColor = false;
+            this.BtnSeeHst.Click += new System.EventHandler(this.BtnSeeHst_Click);
             // 
             // label18
             // 
@@ -1681,25 +1703,19 @@
             this.pictureBox5.TabIndex = 5;
             this.pictureBox5.TabStop = false;
             // 
-            // lbAsokaHistory
+            // btnAdminLogOff
             // 
-            this.lbAsokaHistory.FormattingEnabled = true;
-            this.lbAsokaHistory.ItemHeight = 14;
-            this.lbAsokaHistory.Location = new System.Drawing.Point(819, 14);
-            this.lbAsokaHistory.Name = "lbAsokaHistory";
-            this.lbAsokaHistory.Size = new System.Drawing.Size(375, 270);
-            this.lbAsokaHistory.TabIndex = 16;
-            // 
-            // BtnSeeHst
-            // 
-            this.BtnSeeHst.BackColor = System.Drawing.Color.Gray;
-            this.BtnSeeHst.Location = new System.Drawing.Point(1075, 309);
-            this.BtnSeeHst.Name = "BtnSeeHst";
-            this.BtnSeeHst.Size = new System.Drawing.Size(75, 23);
-            this.BtnSeeHst.TabIndex = 15;
-            this.BtnSeeHst.Text = "See History";
-            this.BtnSeeHst.UseVisualStyleBackColor = false;
-            this.BtnSeeHst.Click += new System.EventHandler(this.BtnSeeHst_Click);
+            this.btnAdminLogOff.BackColor = System.Drawing.Color.Crimson;
+            this.btnAdminLogOff.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnAdminLogOff.Font = new System.Drawing.Font("Microsoft PhagsPa", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAdminLogOff.ForeColor = System.Drawing.SystemColors.Info;
+            this.btnAdminLogOff.Location = new System.Drawing.Point(1102, 416);
+            this.btnAdminLogOff.Name = "btnAdminLogOff";
+            this.btnAdminLogOff.Size = new System.Drawing.Size(103, 46);
+            this.btnAdminLogOff.TabIndex = 17;
+            this.btnAdminLogOff.Text = "Log Off";
+            this.btnAdminLogOff.UseVisualStyleBackColor = false;
+            this.btnAdminLogOff.Click += new System.EventHandler(this.btnAdminLogOff_Click);
             // 
             // Form7
             // 
@@ -1886,5 +1902,6 @@
         private System.Windows.Forms.ComboBox cbRequest_Asoka;
         private System.Windows.Forms.ListBox lbAsokaHistory;
         private System.Windows.Forms.Button BtnSeeHst;
+        private System.Windows.Forms.Button btnAdminLogOff;
     }
 }

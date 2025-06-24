@@ -153,6 +153,7 @@
             this.btnReview_Pace = new System.Windows.Forms.Button();
             this.lbReview_Pace = new System.Windows.Forms.ListBox();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
+            this.btnAdminLogOff = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1_Pace)).BeginInit();
@@ -1613,6 +1614,7 @@
             // 
             this.tabPage5.BackColor = System.Drawing.Color.Silver;
             this.tabPage5.BackgroundImage = global::Restaurant_Reservation_System_FinalProject_26.Properties.Resources.pace1;
+            this.tabPage5.Controls.Add(this.btnAdminLogOff);
             this.tabPage5.Controls.Add(this.lbPaceHistory);
             this.tabPage5.Controls.Add(this.BtnSeeHst);
             this.tabPage5.Controls.Add(this.label18);
@@ -1696,6 +1698,20 @@
             this.pictureBox5.Size = new System.Drawing.Size(314, 228);
             this.pictureBox5.TabIndex = 5;
             this.pictureBox5.TabStop = false;
+            // 
+            // btnAdminLogOff
+            // 
+            this.btnAdminLogOff.BackColor = System.Drawing.Color.Crimson;
+            this.btnAdminLogOff.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnAdminLogOff.Font = new System.Drawing.Font("Microsoft PhagsPa", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAdminLogOff.ForeColor = System.Drawing.SystemColors.Info;
+            this.btnAdminLogOff.Location = new System.Drawing.Point(1075, 401);
+            this.btnAdminLogOff.Name = "btnAdminLogOff";
+            this.btnAdminLogOff.Size = new System.Drawing.Size(103, 46);
+            this.btnAdminLogOff.TabIndex = 12;
+            this.btnAdminLogOff.Text = "Log Off";
+            this.btnAdminLogOff.UseVisualStyleBackColor = false;
+            this.btnAdminLogOff.Click += new System.EventHandler(this.btnAdminLogOff_Click);
             // 
             // Form6
             // 
@@ -1882,5 +1898,6 @@
         private System.Windows.Forms.NumericUpDown numericUpDown1_Pace;
         private System.Windows.Forms.Button BtnSeeHst;
         private System.Windows.Forms.ListBox lbPaceHistory;
+        private System.Windows.Forms.Button btnAdminLogOff;
     }
 }
